@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static tailwind_tags %}
+
+<head>
+ 
+   {% tailwind_css %}
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body class="bg-gray-300">
+    
+<div class="flex w-full  bg-green-600 h-1/2 flex-col ">
+    <div class="mt-8">
+        <div class="flex mx-6 ">
+            <img src="{% static 'img/logo2.png'%}" class="w-[40px] h-[40px]"/>
+            <span class="font-semibold sm:text-2xl mx-3 text-gray-200 mt-1 text-xl">Youtube Downloader </span>
+        </div>
+        
+    </div>
+    <form method="post" action="{% url 'main:getlink'%}" class=" flex w-full  justify-center items-center h-full  mt-20 flex-col mb-10 ">
+        {% csrf_token %}
+        <div class=" my-2"><span class="text-gray-200 sm:text-3xl sm:mx-0 mx-4 text-xl "> Youtube Video Downloader </span></div>
+        
+<input type="test"  name='link' class="w-[70%] sm:w-[60%] md:w-[50%] h-[60px] rounded-2xl px-4 placeholder:font-thin my-10 " placeholder="Paste link of video here"/>
+<button type="submit" class="bg-red-500 px-6 py-3 text-gray-200 font-bold rounded-2xl text-xl -mt-24 lg:ml-96 md:ml-72 ml-[140px] sm:ml-64 shadow-[0_2.8px_2.2px_rgba(0,_0,_0,_0.034),_0_6.7px_5.3px_rgba(0,_0,_0,_0.048),_0_12.5px_10px_rgba(0,_0,_0,_0.06),_0_22.3px_17.9px_rgba(0,_0,_0,_0.072),_0_41.8px_33.4px_rgba(0,_0,_0,_0.086),_0_100px_80px_rgba(0,_0,_0,_0.12)]  hover:duration-200 transition ease-linear delay-[120ms] hover:translate-x-1 hover:scale-105 hover:bg-red-600 duration-300 hover:text-white hover:shadow-[rgba(0,_0,_0,_0.4)_0px_30px_90px] ">GET</button>
+
+</form>
+{% if link %}
+    <div class="w-full  flex justify-center items-center my-10   ">
+        <div  class="shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] flex p-4 rounded-2xl sm:flex-row flex-col  justify-center items-center sm:justify-start sm:items-start ">
+        <div class="mx-0">
+            <img src={{thumbnail}} class="sm:h-[150px]sm:w-[250px] h-[100px] w-[200px] shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)] rounded-lg " />
+            <div class="font-semibold text-gray-200 my-3">
+            title: <span class="mx-2"></span>{{title}} <br>
+            duration: <span class="mx-2"></span>{{duration}}<br>
+            views: <span class="mx-2"></span>{{views}}
+            </div>
+
+        </div>
+        <div class="mx-6">
+            <span class="font-semibold text-gray-200">download Video as:</span>
+          
+            
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg m-0">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    Format
+                </th>
+                
+                <th scope="col" class="px-6 py-3">
+                    Action
+                </th>
+            
+            </tr>
+        </thead>
+        <tbody>
+           
+            {% for video in videos%}
+            <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                {{video.resolution}}.{{video.mime_type}} 
+                </th>
+                <td class="px-6 py-4">
+                    <form method="post" action="{% url 'main:dd' %}">
+                        {% csrf_token %}
+                        
+                        <input type='hidden'   name="res" value={{video.resolution}}/>
+                        <input type='hidden'   name="mime_type" value={{video.mime_type}}/>
+                        <input type='hidden'   name="link" value={{link}}/>
+
+                        <button type="submit" class="get bg-red-500 text-gray-200 font-bold px-3 py-2 rounded-2xl hover:bg-red-700 hover:text-white cursor-pointer">download</button>
+                    </form>
+
+
+
+                </td>
+                
+            </tr>
+            {%endfor%}
+          
+            
+              
+          
+          
+        </tbody>
+    </table>
+</div>
+
+        </div>
+
+    </div>
+</div>
+{%endif%}
+    
+</div>
+<div class="w-full flex  ">
+    <div class="w-full sm:mx-20 mx-11 my-10  text-gray-800 font-thin text-xl">
+        <span >Youtube being one of the most visited video websites in the world,This platform allows users to download videos from YouTube onto their devices in various formats and resolutions. </span>
+        <span>This  website  offers a simple and user-friendly interface that enables users to paste the URL of the desired YouTube video and initiate the download process.</span><br><br>
+        <span class="font-bold">WORKS ON ALL PLATFORMS!!!</span>
+    </div>
+    
+</div>
+{% for message in messages %}
+{% if message.tags == 'success'%}
+<script>
+
+    Swal.fire({
+  icon: 'success',
+  title: 'Done',
+  text: '100%',
+  confirmButtonText: 'OK',
+
+})
+</script>
+{%endif%}
+{%endfor%}
+
+
+
+</body>
+<script src="{% static 'js/loading.js'%}"></script>
+</html>

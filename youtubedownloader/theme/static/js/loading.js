@@ -18,3 +18,18 @@ for (var i=0; i<elements.length; i++){
 
 
 }
+
+
+
+document.getElementById("get").addEventListener("click",(e)=>{
+  if (document.getElementById("link").value =="" ){
+    document.getElementById("link").style.borderWidth='2px'
+    document.getElementById("link").style.borderColor='red'
+    e.preventDefault()
+  }
+  else{
+    document.getElementById("form").submit()
+  }
+
+    
+})

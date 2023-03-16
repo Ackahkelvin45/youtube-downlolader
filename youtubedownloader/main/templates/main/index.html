@@ -21,12 +21,12 @@
         </div>
         
     </div>
-    <form method="post" action="{% url 'main:getlink'%}" class=" flex w-full  justify-center items-center h-full  mt-20 flex-col mb-10 ">
+    <form method="post" action="{% url 'main:getlink'%}"  id="form" class=" flex w-full  justify-center items-center h-full  mt-20 flex-col mb-10 ">
         {% csrf_token %}
         <div class=" my-2"><span class="text-gray-200 sm:text-3xl sm:mx-0 mx-4 text-xl "> Youtube Video Downloader </span></div>
         
-<input type="test"  name='link' class="w-[70%] sm:w-[60%] md:w-[50%] h-[60px] rounded-2xl px-4 placeholder:font-thin my-10 " placeholder="Paste link of video here"/>
-<button type="submit" class="bg-red-500 px-6 py-3 text-gray-200 font-bold rounded-2xl text-xl -mt-24 lg:ml-96 md:ml-72 ml-[140px] sm:ml-64 shadow-[0_2.8px_2.2px_rgba(0,_0,_0,_0.034),_0_6.7px_5.3px_rgba(0,_0,_0,_0.048),_0_12.5px_10px_rgba(0,_0,_0,_0.06),_0_22.3px_17.9px_rgba(0,_0,_0,_0.072),_0_41.8px_33.4px_rgba(0,_0,_0,_0.086),_0_100px_80px_rgba(0,_0,_0,_0.12)]  hover:duration-200 transition ease-linear delay-[120ms] hover:translate-x-1 hover:scale-105 hover:bg-red-600 duration-300 hover:text-white hover:shadow-[rgba(0,_0,_0,_0.4)_0px_30px_90px] ">GET</button>
+<input type="test" id="link"  name='link' class="w-[70%] sm:w-[60%] md:w-[50%] h-[60px] rounded-2xl px-4 placeholder:font-thin my-10 " placeholder="Paste link of video here"/>
+<button  id="get" class="bg-red-500 px-6 py-3 text-gray-200 font-bold rounded-2xl text-xl -mt-24 lg:ml-96 md:ml-72 ml-[140px] sm:ml-64 shadow-[0_2.8px_2.2px_rgba(0,_0,_0,_0.034),_0_6.7px_5.3px_rgba(0,_0,_0,_0.048),_0_12.5px_10px_rgba(0,_0,_0,_0.06),_0_22.3px_17.9px_rgba(0,_0,_0,_0.072),_0_41.8px_33.4px_rgba(0,_0,_0,_0.086),_0_100px_80px_rgba(0,_0,_0,_0.12)]  hover:duration-200 transition ease-linear delay-[120ms] hover:translate-x-1 hover:scale-105 hover:bg-red-600 duration-300 hover:text-white hover:shadow-[rgba(0,_0,_0,_0.4)_0px_30px_90px] ">GET</button>
 
 </form>
 {% if link %}
@@ -119,6 +119,18 @@
 
 })
 </script>
+{%elif message.tags == 'error'%}
+<script>
+
+    Swal.fire({
+  icon: 'error',
+  title: 'Error',
+  text: 'Pleas Try again...',
+  confirmButtonText: 'OK',
+
+})
+</script>
+
 {%endif%}
 {%endfor%}
 

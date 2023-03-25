@@ -17,38 +17,6 @@ def indexpage(request):
  return render(request,"main/index.html",context=context)
 
 
-def getlink(request):
- if request.method=='POST':
-  try:
-    link=request.POST['link']
-
-    yt=YouTube(link)
-
-    title=(yt.title[:30] + '..') if len(yt.title) > 30 else yt.title
-
-    minutes =  int(yt.length )/ 60
-    seconds = int(yt.length) % 60
-    duration=str(int(minutes)) +":"+str(int(seconds))
-    views=yt.views
-    thumbnail=yt.thumbnail_url
-
-
-    yd=yt.streams.filter(type='video',adaptive=True,)
-
-    context={
-    'videos':yd,
-    'title':title,
-    "duration":duration,
-    'views':views,
-    'link':True,
-    'thumbnail':thumbnail,
-    "link":link
-
-    }
-    return render(request,"main/index.html",context=context)
-  except:
-    messages.error(request,'Error')
-    return redirect(reverse("main:index"))
    
         
 
@@ -73,3 +41,36 @@ def download(request):
     messages.error(request,'Error')
     return redirect(reverse("main:index"))
    
+
+def getlink(request):
+  if request.method=='POST':
+    try:
+      link=request.POST['link']
+
+      yt=YouTube(link)
+
+      title=(yt.title[:30] + '..') if len(yt.title) > 30 else yt.title
+
+      minutes =  int(yt.length )/ 60
+      seconds = int(yt.length) % 60
+      duration=str(int(minutes)) +":"+str(int(seconds))
+      views=yt.views
+      thumbnail=yt.thumbnail_url
+
+
+      yd=yt.streams.filter(type='video',adaptive=True,)
+
+      context={
+      'videos':yd,
+      'title':title,
+      "duration":duration,
+      'views':views,
+      'link':True,
+      'thumbnail':thumbnail,
+      "link":link
+
+      }
+      return render(request,"main/index.html",context=context)
+    except:
+      messages.error(request,'Error')
+      return redirect(reverse("main:index"))

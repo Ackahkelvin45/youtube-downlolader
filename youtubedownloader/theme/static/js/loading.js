@@ -28,8 +28,12 @@ document.getElementById("get").addEventListener("click",(e)=>{
     e.preventDefault()
   }
   else{
+    
     document.getElementById("form").submit()
   }
 
     
 })
+
+
+
